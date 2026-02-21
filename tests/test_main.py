@@ -46,7 +46,8 @@ def test_create_item():
     """Test the create item endpoint."""
     name = "item1"
     description = "Item 1"
-    response = client.post("/api/items", json={"name": name, "description": description})
+    response = client.post("/api/items",
+                           json={"name": name, "description": description})
     assert response.status_code == 201
     data = response.json()
     assert data["id"] == 999
