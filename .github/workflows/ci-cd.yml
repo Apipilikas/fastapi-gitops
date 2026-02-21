@@ -78,7 +78,7 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build -t $IMAGE_NAME:$VERSION .
+          docker build -f Docker/DockerFile -t $IMAGE_NAME:$VERSION .
 
       - name: Push docker image
         if: ${{ github.event_name == 'release' }}
