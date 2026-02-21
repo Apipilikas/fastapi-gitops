@@ -73,7 +73,7 @@ jobs:
         run: |
           echo "IMAGE_NAME=${REPO,,}" >>${GITHUB_ENV}
         env:
-          REPO: ghcr.io/${{ github.repository }}
+          REPO: ${{ github.repository }}
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
