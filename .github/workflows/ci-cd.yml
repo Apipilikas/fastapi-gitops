@@ -9,7 +9,7 @@ on:
     tags-ignore:
       - '**'
 env:
-  IMAGE_NAME: fastapi
+  IMAGE_NAME: ghcr.io/${{ github.repository }}
   REPO_NAME: apipilikas
   VERSION: ${{ github.event_name == 'release' && github.event.release.tag_name || github.sha }}
 
