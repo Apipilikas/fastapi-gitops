@@ -9,7 +9,6 @@ on:
     tags-ignore:
       - '**'
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
   REPO_NAME: apipilikas
   VERSION: ${{ github.event_name == 'release' && github.event.release.tag_name || github.sha }}
 
@@ -70,6 +69,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set lower case repository name
+        run: |
+          echo "IMAGE_NAME=${REPO,,}" >>${GITHUB_ENV}
+        env:
+          REPO: '${{ github.repository }}'
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -78,9 +83,9 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build -f docker/Dockerfile -t $IMAGE_NAME:$VERSION .
+          docker build -f docker/Dockerfile -t ${{ env.IMAGE_NAME }}:$VERSION .
 
       - name: Push docker image
         if: ${{ github.event_name == 'release' }}
         run: |
-          docker push $IMAGE_NAME:$VERSION
+          docker push ${{ env.IMAGE_NAME }}:$VERSION
